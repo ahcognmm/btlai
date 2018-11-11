@@ -1,0 +1,192 @@
+JFDML JFormDesigner: "6.0.4.1.172" Java: "1.8.0_152-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"title": "A START DEMO"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "Thanh Pho"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 4
+				"width": 220
+				"height": 40
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "cityTf"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 44
+				"width": 250
+				"height": 45
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "OK"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "addCityAction", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 180
+				"width": 120
+				"height": 30
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": " Thanh pho 1"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 220
+				"height": 40
+				"x": 35
+				"y": 223
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "comboBox1"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "selectItem", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 35
+				"y": 280
+				"width": 280
+				"height": 40
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": " Thanh pho 2"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 220
+				"height": 40
+				"x": 35
+				"y": 340
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "comboBox2"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 280
+				"height": 40
+				"x": 35
+				"y": 395
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label4"
+				"text": "Khoang cach "
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 220
+				"height": 40
+				"x": 35
+				"y": 445
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "distanceTf"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 250
+				"height": 45
+				"x": 35
+				"y": 490
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button2"
+				"text": "OK"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "addDistanceAction", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 120
+				"height": 30
+				"x": 40
+				"y": 560
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "viewRs"
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 385
+				"y": 30
+				"width": 575
+				"height": 525
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label5"
+				"text": " Thanh pho 1"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 220
+				"height": 40
+				"x": 1020
+				"y": 105
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "cityStart"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "selectItem", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 280
+				"height": 40
+				"x": 1020
+				"y": 160
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label6"
+				"text": " Thanh pho 2"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 220
+				"height": 40
+				"x": 1020
+				"y": 230
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "cityFinish"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 280
+				"height": 40
+				"x": 1020
+				"y": 285
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "startAstar"
+				"text": "OK"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "showDialog", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 120
+				"x": 1025
+				"y": 370
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label7"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 220
+				"height": 40
+				"x": 40
+				"y": 89
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "cityTf2"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 250
+				"height": 45
+				"x": 40
+				"y": 129
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 1345, 680 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "dialog1"
+			"title": "KET QUA TIM DUONG"
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane2"
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "result"
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 15
+				"y": 15
+				"width": 445
+				"height": 175
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 340, 705 )
+			"size": new java.awt.Dimension( 475, 235 )
+		} )
+	}
+}
