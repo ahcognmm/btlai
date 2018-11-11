@@ -2,6 +2,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 /*
  * Created by JFormDesigner on Sat Nov 10 21:38:07 ICT 2018
  */
@@ -12,14 +13,20 @@ import java.util.ArrayList;
  */
 public class testa extends JFrame {
 
+    public HashMap<String, Node> listNode = new HashMap<String,Node>();
+    public ArrayList<ArrayList<Edge>> listEdge = new ArrayList<>();
+
     public ArrayList<String> CityList = new ArrayList<>();
 
     public testa() {
         initComponents();
+        listNode.put("tp.A", new Node("tp.A", 0));
+        comboBox1.addItem("tp.A");
+        comboBox2.addItem("tp.A");
+        cityStart.addItem("tp.A");
         comboBox1.setEnabled(false);
         comboBox2.setEnabled(false);
         cityStart.setEnabled(false);
-        cityFinish.setEnabled(false);
         viewRs.setEditable(false);
         result.setEditable(false);
     }
@@ -27,14 +34,16 @@ public class testa extends JFrame {
     private void addCityAction(ActionEvent e) {
         // TODO add your code here
         String city = cityTf.getText();
+        double h_score = Double.parseDouble(hsScore.getText());
         if (!CityList.contains(city) && !city.equals("") && !city.matches("[\\s+]")) {
             CityList.add(city);
             comboBox1.addItem(city);
             comboBox1.setEnabled(true);
             comboBox2.addItem(city);
             cityStart.addItem(city);
-            cityFinish.addItem(city);
+            listNode.put(city, new Node(city, h_score));
         }
+
         cityTf.setText("");
         cityTf.requestFocus();
     }
@@ -49,18 +58,26 @@ public class testa extends JFrame {
         String city1 = comboBox1.getSelectedItem().toString();
         String city2 = comboBox2.getSelectedItem().toString();
         if (!city1.equals(city2)) {
-            String distance = distanceTf.getText();
+            double distance = Double.parseDouble(distanceTf.getText());
             String rs = city1 + "--" + city2 + " : " + distance;
             viewRs.append(rs);
             viewRs.append("\n");
             cityStart.setEnabled(true);
-            cityFinish.setEnabled(true);
+            System.out.println(listNode.get(city1).value);
+            System.out.println(listNode.get(city2).value);
+            listNode.get(city1).adjacencies.add(new Edge(listNode.get(city2),distance));
+            listNode.get(city2).adjacencies.add(new Edge(listNode.get(city1),distance));
         }
     }
 
     private void showDialog(ActionEvent e) {
         // TODO add your code here
+        String city1 = cityStart.getSelectedItem().toString();
+        AstarSearchAlgo algo = new AstarSearchAlgo();
+        algo.AstarSearch(listNode.get(city1),listNode.get("tp.A"));
+        result.append(algo.printPath(listNode.get("tp.A")).toString());
         dialog1.setVisible(true);
+
     }
 
     private void initComponents() {
@@ -80,11 +97,9 @@ public class testa extends JFrame {
         viewRs = new JTextArea();
         label5 = new JLabel();
         cityStart = new JComboBox();
-        label6 = new JLabel();
-        cityFinish = new JComboBox();
         startAstar = new JButton();
         label7 = new JLabel();
-        cityTf2 = new JTextField();
+        hsScore = new JTextField();
         dialog1 = new JDialog();
         scrollPane2 = new JScrollPane();
         result = new JTextArea();
@@ -154,26 +169,22 @@ public class testa extends JFrame {
         contentPane.add(cityStart);
         cityStart.setBounds(1020, 160, 280, 40);
 
-        //---- label6 ----
-        label6.setText(" Thanh pho 2");
-        contentPane.add(label6);
-        label6.setBounds(1020, 230, 220, 40);
-        contentPane.add(cityFinish);
-        cityFinish.setBounds(1020, 285, 280, 40);
-
         //---- startAstar ----
         startAstar.setText("OK");
         startAstar.addActionListener(e -> showDialog(e));
         contentPane.add(startAstar);
-        startAstar.setBounds(1025, 370, 120, startAstar.getPreferredSize().height);
+        startAstar.setBounds(1020, 250, 120, startAstar.getPreferredSize().height);
+
+        //---- label7 ----
+        label7.setText("Khang cach chim bay v\u1edbi tp A");
         contentPane.add(label7);
         label7.setBounds(40, 89, 220, 40);
-        contentPane.add(cityTf2);
-        cityTf2.setBounds(40, 129, 250, 45);
+        contentPane.add(hsScore);
+        hsScore.setBounds(40, 129, 250, 45);
 
         { // compute preferred size
             Dimension preferredSize = new Dimension();
-            for(int i = 0; i < contentPane.getComponentCount(); i++) {
+            for (int i = 0; i < contentPane.getComponentCount(); i++) {
                 Rectangle bounds = contentPane.getComponent(i).getBounds();
                 preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                 preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -202,7 +213,7 @@ public class testa extends JFrame {
 
             { // compute preferred size
                 Dimension preferredSize = new Dimension();
-                for(int i = 0; i < dialog1ContentPane.getComponentCount(); i++) {
+                for (int i = 0; i < dialog1ContentPane.getComponentCount(); i++) {
                     Rectangle bounds = dialog1ContentPane.getComponent(i).getBounds();
                     preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                     preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -235,14 +246,13 @@ public class testa extends JFrame {
     private JTextArea viewRs;
     private JLabel label5;
     private JComboBox cityStart;
-    private JLabel label6;
-    private JComboBox cityFinish;
     private JButton startAstar;
     private JLabel label7;
-    private JTextField cityTf2;
+    private JTextField hsScore;
     private JDialog dialog1;
     private JScrollPane scrollPane2;
     private JTextArea result;
+
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     public static void main(String[] args) {
         JFrame frame = new testa();

@@ -124,34 +124,18 @@ new FormModel {
 				"x": 1020
 				"y": 160
 			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label6"
-				"text": " Thanh pho 2"
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 220
-				"height": 40
-				"x": 1020
-				"y": 230
-			} )
-			add( new FormComponent( "javax.swing.JComboBox" ) {
-				name: "cityFinish"
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 280
-				"height": 40
-				"x": 1020
-				"y": 285
-			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "startAstar"
 				"text": "OK"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "showDialog", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 120
-				"x": 1025
-				"y": 370
+				"x": 1020
+				"y": 250
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label7"
+				"text": "Khang cach chim bay với tp A"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 220
 				"height": 40
@@ -159,7 +143,7 @@ new FormModel {
 				"y": 89
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "cityTf2"
+				name: "hsScore"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 250
 				"height": 45
