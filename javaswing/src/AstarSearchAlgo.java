@@ -1,17 +1,11 @@
-import java.util.PriorityQueue;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.List;
-import java.util.Comparator;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
-public class AstarSearchAlgo{
+public class AstarSearchAlgo {
 
     //h scores is the stright-line distance from the current city to Bucharest
 //    public static void main(String[] args){
 
-        //initialize the graph base on the Romania map
+    //initialize the graph base on the Romania map
 
 //        Node n1 = new Node("Arad",366);
 //        Node n2 = new Node("Zerind",374);
@@ -28,7 +22,7 @@ public class AstarSearchAlgo{
 //        Node n13 = new Node("Bucharest",0);
 //        Node n14 = new Node("Giurgiu",77);
 
-        //initialize the edges
+    //initialize the edges
 
 //        //Arad
 //        n1.adjacencies = new Edge[]{
@@ -124,7 +118,7 @@ public class AstarSearchAlgo{
 //                new Edge(n13,90)
 //        };
 
-//        AstarSearch(n1,n4);
+    //        AstarSearch(n1,n4);
 //
 //        List<Node> path = printPath(n4);
 //
@@ -132,11 +126,16 @@ public class AstarSearchAlgo{
 //
 //
 //    }
+    public static void main(String[] args) {
+        HashMap<String,Node> m = new HashMap<>();
+        m.put("a",new Node("a",2));
+        m.get("a");
+    }
 
-    public List<Node> printPath(Node target){
+    public List<Node> printPath(Node target) {
         List<Node> path = new ArrayList<Node>();
 
-        for(Node node = target; node!=null; node = node.parent){
+        for (Node node = target; node != null; node = node.parent) {
             path.add(node);
         }
 
@@ -145,22 +144,18 @@ public class AstarSearchAlgo{
         return path;
     }
 
-    public void AstarSearch(Node source, Node goal){
+    public void AstarSearch(Node source, Node goal) {
 
         Set<Node> explored = new HashSet<Node>();
 
         //override compare method
         PriorityQueue<Node> queue = new PriorityQueue<Node>(20,
                 (i, j) -> {
-                    if(i.f_scores > j.f_scores){
+                    if (i.f_scores > j.f_scores) {
                         return 1;
-                    }
-
-                    else if (i.f_scores < j.f_scores){
+                    } else if (i.f_scores < j.f_scores) {
                         return -1;
-                    }
-
-                    else{
+                    } else {
                         return 0;
                     }
                 }
@@ -173,7 +168,7 @@ public class AstarSearchAlgo{
 
         boolean found = false;
 
-        while((!queue.isEmpty())&&(!found)){
+        while ((!queue.isEmpty()) && (!found)) {
 
             //the node in having the lowest f_score value
             Node current = queue.poll();
@@ -181,12 +176,13 @@ public class AstarSearchAlgo{
             explored.add(current);
 
             //goal found
-            if(current.value.equals(goal.value)){
+            if (current.value.equals(goal.value)) {
                 found = true;
             }
 
+
             //check every child of current node
-            for(Edge e : current.adjacencies){
+            for (Edge e : current.adjacencies) {
                 Node child = e.target;
                 double cost = e.cost;
                 double temp_g_scores = current.g_scores + cost;
@@ -196,22 +192,22 @@ public class AstarSearchAlgo{
                                 /*if child node has been evaluated and 
                                 the newer f_score is higher, skip*/
 
-                if((explored.contains(child)) &&
-                        (temp_f_scores >= child.f_scores)){
+                if ((explored.contains(child)) &&
+                        (temp_f_scores >= child.f_scores)) {
                     continue;
                 }
 
                                 /*else if child node is not in queue or 
                                 newer f_score is lower*/
 
-                else if((!queue.contains(child)) ||
-                        (temp_f_scores < child.f_scores)){
+                else if ((!queue.contains(child)) ||
+                        (temp_f_scores < child.f_scores)) {
 
                     child.parent = current;
                     child.g_scores = temp_g_scores;
                     child.f_scores = temp_f_scores;
 
-                    if(queue.contains(child)){
+                    if (queue.contains(child)) {
                         queue.remove(child);
                     }
 
@@ -227,32 +223,37 @@ public class AstarSearchAlgo{
 
 }
 
-class Node{
+class Node {
 
     public final String value;
     public double g_scores;
     public final double h_scores;
     public double f_scores = 0;
-    public ArrayList<Edge> adjacencies;
+    public ArrayList<Edge> adjacencies = new ArrayList<>();
     public Node parent;
 
-    public Node(String val, double hVal){
+    public Node(String val, double hVal) {
         value = val;
         h_scores = hVal;
     }
 
-    public String toString(){
+    public String toString() {
         return value;
     }
 
 }
 
-class Edge{
+class Edge {
     public final double cost;
     public final Node target;
 
-    public Edge(Node targetNode, double costVal){
+    public Edge(Node targetNode, double costVal) {
         target = targetNode;
         cost = costVal;
+    }
+
+    @Override
+    public String toString() {
+        return target.value;
     }
 }

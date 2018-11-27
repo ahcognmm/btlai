@@ -102,8 +102,8 @@ new FormModel {
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 385
-				"y": 30
-				"width": 575
+				"y": 35
+				"width": 290
 				"height": 525
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
@@ -150,6 +150,14 @@ new FormModel {
 				"x": 40
 				"y": 129
 			} )
+			add( new FormComponent( "javax.swing.JTextArea" ) {
+				name: "viewRs2"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 288
+				"height": 523
+				"x": 685
+				"y": 35
+			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
 			"size": new java.awt.Dimension( 1345, 680 )
@@ -169,8 +177,26 @@ new FormModel {
 				"height": 175
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 340, 705 )
+			"location": new java.awt.Point( 620, 705 )
 			"size": new java.awt.Dimension( 475, 235 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "dialog2"
+			"title": "Thông báo"
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane3"
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "information"
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 10
+				"y": 10
+				"width": 275
+				"height": 125
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 115, 700 )
+			"size": new java.awt.Dimension( 300, 175 )
 		} )
 	}
 }

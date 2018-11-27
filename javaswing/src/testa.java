@@ -13,7 +13,8 @@ import java.util.HashMap;
  */
 public class testa extends JFrame {
 
-    public HashMap<String, Node> listNode = new HashMap<String,Node>();
+    private testjung g = new testjung();
+    public HashMap<String, Node> listNode = new HashMap<String, Node>();
     public ArrayList<ArrayList<Edge>> listEdge = new ArrayList<>();
 
     public ArrayList<String> CityList = new ArrayList<>();
@@ -28,6 +29,7 @@ public class testa extends JFrame {
         comboBox2.setEnabled(false);
         cityStart.setEnabled(false);
         viewRs.setEditable(false);
+        viewRs2.setEditable(false);
         result.setEditable(false);
     }
 
@@ -42,9 +44,10 @@ public class testa extends JFrame {
             comboBox2.addItem(city);
             cityStart.addItem(city);
             listNode.put(city, new Node(city, h_score));
+            viewRs2.append(city + "-->tp.A::" + h_score + "\n");
         }
-
         cityTf.setText("");
+        hsScore.setText("");
         cityTf.requestFocus();
     }
 
@@ -54,6 +57,7 @@ public class testa extends JFrame {
     }
 
     private void addDistanceAction(ActionEvent e) {
+        System.out.println(listNode.values().toString());
         // TODO add your code here
         String city1 = comboBox1.getSelectedItem().toString();
         String city2 = comboBox2.getSelectedItem().toString();
@@ -62,20 +66,35 @@ public class testa extends JFrame {
             String rs = city1 + "--" + city2 + " : " + distance;
             viewRs.append(rs);
             viewRs.append("\n");
+//            if(distance >= listNode.)
             cityStart.setEnabled(true);
             System.out.println(listNode.get(city1).value);
             System.out.println(listNode.get(city2).value);
-            listNode.get(city1).adjacencies.add(new Edge(listNode.get(city2),distance));
-            listNode.get(city2).adjacencies.add(new Edge(listNode.get(city1),distance));
+            listNode.get(city1).adjacencies.add(new Edge(listNode.get(city2), distance));
+            listNode.get(city2).adjacencies.add(new Edge(listNode.get(city1), distance));
+            listNode.get(city1).adjacencies.forEach(i -> {
+                System.out.println(i.toString());
+            });
         }
     }
 
     private void showDialog(ActionEvent e) {
         // TODO add your code here
+        result.setText("");
         String city1 = cityStart.getSelectedItem().toString();
         AstarSearchAlgo algo = new AstarSearchAlgo();
-        algo.AstarSearch(listNode.get(city1),listNode.get("tp.A"));
+        algo.AstarSearch(listNode.get(city1), listNode.get("tp.A"));
         result.append(algo.printPath(listNode.get("tp.A")).toString());
+        double cost = 0;
+        for (Node i : algo.printPath(listNode.get("tp.A"))) {
+            for (Edge ee : i.adjacencies) {
+                if (i.parent.equals(ee.target.value)) {
+                    cost += ee.cost;
+                }
+            }
+        }
+        result.append("cost::" + cost);
+
         dialog1.setVisible(true);
 
     }
@@ -100,9 +119,13 @@ public class testa extends JFrame {
         startAstar = new JButton();
         label7 = new JLabel();
         hsScore = new JTextField();
+        viewRs2 = new JTextArea();
         dialog1 = new JDialog();
         scrollPane2 = new JScrollPane();
         result = new JTextArea();
+        dialog2 = new JDialog();
+        scrollPane3 = new JScrollPane();
+        information = new JTextArea();
 
         //======== this ========
         setTitle("A START DEMO");
@@ -157,7 +180,7 @@ public class testa extends JFrame {
             scrollPane1.setViewportView(viewRs);
         }
         contentPane.add(scrollPane1);
-        scrollPane1.setBounds(385, 30, 575, 525);
+        scrollPane1.setBounds(385, 35, 290, 525);
 
         //---- label5 ----
         label5.setText(" Thanh pho 1");
@@ -181,10 +204,12 @@ public class testa extends JFrame {
         label7.setBounds(40, 89, 220, 40);
         contentPane.add(hsScore);
         hsScore.setBounds(40, 129, 250, 45);
+        contentPane.add(viewRs2);
+        viewRs2.setBounds(685, 35, 288, 523);
 
         { // compute preferred size
             Dimension preferredSize = new Dimension();
-            for (int i = 0; i < contentPane.getComponentCount(); i++) {
+            for(int i = 0; i < contentPane.getComponentCount(); i++) {
                 Rectangle bounds = contentPane.getComponent(i).getBounds();
                 preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                 preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -213,7 +238,7 @@ public class testa extends JFrame {
 
             { // compute preferred size
                 Dimension preferredSize = new Dimension();
-                for (int i = 0; i < dialog1ContentPane.getComponentCount(); i++) {
+                for(int i = 0; i < dialog1ContentPane.getComponentCount(); i++) {
                     Rectangle bounds = dialog1ContentPane.getComponent(i).getBounds();
                     preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                     preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -226,6 +251,36 @@ public class testa extends JFrame {
             }
             dialog1.pack();
             dialog1.setLocationRelativeTo(dialog1.getOwner());
+        }
+
+        //======== dialog2 ========
+        {
+            dialog2.setTitle("Th\u00f4ng b\u00e1o");
+            Container dialog2ContentPane = dialog2.getContentPane();
+            dialog2ContentPane.setLayout(null);
+
+            //======== scrollPane3 ========
+            {
+                scrollPane3.setViewportView(information);
+            }
+            dialog2ContentPane.add(scrollPane3);
+            scrollPane3.setBounds(10, 10, 275, 125);
+
+            { // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < dialog2ContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = dialog2ContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = dialog2ContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                dialog2ContentPane.setMinimumSize(preferredSize);
+                dialog2ContentPane.setPreferredSize(preferredSize);
+            }
+            dialog2.pack();
+            dialog2.setLocationRelativeTo(dialog2.getOwner());
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
@@ -249,10 +304,13 @@ public class testa extends JFrame {
     private JButton startAstar;
     private JLabel label7;
     private JTextField hsScore;
+    private JTextArea viewRs2;
     private JDialog dialog1;
     private JScrollPane scrollPane2;
     private JTextArea result;
-
+    private JDialog dialog2;
+    private JScrollPane scrollPane3;
+    private JTextArea information;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     public static void main(String[] args) {
         JFrame frame = new testa();
