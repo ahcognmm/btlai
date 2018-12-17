@@ -11,16 +11,16 @@ import java.util.HashMap;
 /**
  * @author unknown
  */
-public class testa extends JFrame {
+public class App extends JFrame {
 
-    private testjung g = new testjung();
-    private testjung graphRs = new testjung();
+    private Jung g = new Jung();
+    private Jung graphRs = new Jung();
     public HashMap<String, Node> listNode = new HashMap<String, Node>();
     public ArrayList<ArrayList<Edge>> listEdge = new ArrayList<>();
 
     public ArrayList<String> CityList = new ArrayList<>();
 
-    public testa() {
+    public App() {
         initComponents();
         listNode.put("Bucharest", new Node("Bucharest", 0));
         g.addVertex("Bucharest");
@@ -30,8 +30,6 @@ public class testa extends JFrame {
         comboBox1.setEnabled(false);
         comboBox2.setEnabled(false);
         cityStart.setEnabled(false);
-        viewRs.setEditable(false);
-        viewRs2.setEditable(false);
         result.setEditable(false);
     }
 
@@ -47,7 +45,6 @@ public class testa extends JFrame {
             comboBox2.addItem(city);
             cityStart.addItem(city);
             listNode.put(city, new Node(city, h_score));
-            viewRs2.append(city + "-->tp.A::" + h_score + "\n");
         }
         cityTf.setText("");
         hsScore.setText("");
@@ -67,8 +64,6 @@ public class testa extends JFrame {
         if (!city1.equals(city2)) {
             double distance = Double.parseDouble(distanceTf.getText());
             String rs = city1 + "--" + city2 + " : " + distance;
-            viewRs.append(rs);
-            viewRs.append("\n");
 //            if(distance >= listNode.)
             cityStart.setEnabled(true);
             System.out.println(listNode.get(city1).value);
@@ -85,19 +80,21 @@ public class testa extends JFrame {
     private void showDialog(ActionEvent e) {
         // TODO add your code here
 
+        HashMap<String, Node> listNode1 = this.listNode;
+
         String city1 = cityStart.getSelectedItem().toString();
         AstarSearchAlgo algo = new AstarSearchAlgo();
-        algo.AstarSearch(listNode.get(city1), listNode.get("tp.A"));
+        algo.AstarSearch(listNode1.get(city1), listNode1.get("Bucharest"));
 
-        ArrayList<Node> arr = (ArrayList<Node>) algo.printPath(listNode.get("tp.A"));
+        ArrayList<Node> arr = (ArrayList<Node>) algo.printPath(listNode1.get("Bucharest"));
         for (int i = 0; i < arr.size(); i++) {
             graphRs.addVertex(arr.get(i).value);
             if (i >= 1) {
                 graphRs.addEdge("edge" + i, arr.get(i).value, arr.get(i - 1).value);
             }
         }
-        double cost = 0;
-//        for (Node i : algo.printPath(listNode.get("tp.A"))) {
+//        double cost = 0;
+//        for (Node i : algo.printPath(listNode.get("Bucharest"))) {
 //            for (Edge ee : i.adjacencies) {
 //                if (i.parent.equals(ee.target.value)) {
 //                    cost += ee.cost;
@@ -105,9 +102,9 @@ public class testa extends JFrame {
 //            }
 //        }
 
-        JFrame frame = new JFrame("Cost::" + cost);
+        JFrame frame = new JFrame();
         frame.setLocationRelativeTo(null);
-        frame.getContentPane().add(graphRs.getImage());
+        frame.getContentPane().add(graphRs.getImage(false));
         frame.pack();
         frame.setVisible(true);
 
@@ -117,14 +114,14 @@ public class testa extends JFrame {
         // TODO add your code here
         JFrame frame = new JFrame("My Graph");
         frame.setLocationRelativeTo(null);
-        frame.getContentPane().add(g.getImage());
+        frame.getContentPane().add(g.getImage(true));
         frame.pack();
         frame.setVisible(true);
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - ngoc ha
+        // Generated using JFormDesigner Evaluation license - ahcogn
         label1 = new JLabel();
         cityTf = new JTextField();
         button1 = new JButton();
@@ -135,14 +132,11 @@ public class testa extends JFrame {
         label4 = new JLabel();
         distanceTf = new JTextField();
         button2 = new JButton();
-        scrollPane1 = new JScrollPane();
-        viewRs = new JTextArea();
         label5 = new JLabel();
         cityStart = new JComboBox();
         startAstar = new JButton();
         label7 = new JLabel();
         hsScore = new JTextField();
-        viewRs2 = new JTextArea();
         button5 = new JButton();
         dialog1 = new JDialog();
         scrollPane2 = new JScrollPane();
@@ -150,25 +144,6 @@ public class testa extends JFrame {
         dialog2 = new JDialog();
         scrollPane3 = new JScrollPane();
         information = new JTextArea();
-        this2 = new JFrame();
-        label6 = new JLabel();
-        cityTf2 = new JTextField();
-        button3 = new JButton();
-        label8 = new JLabel();
-        comboBox3 = new JComboBox();
-        label9 = new JLabel();
-        comboBox4 = new JComboBox();
-        label10 = new JLabel();
-        distanceTf2 = new JTextField();
-        button4 = new JButton();
-        scrollPane4 = new JScrollPane();
-        viewRs3 = new JTextArea();
-        label11 = new JLabel();
-        cityStart2 = new JComboBox();
-        startAstar2 = new JButton();
-        label12 = new JLabel();
-        hsScore2 = new JTextField();
-        viewRs4 = new JTextArea();
 
         //======== this ========
         setTitle("A START DEMO");
@@ -218,37 +193,28 @@ public class testa extends JFrame {
         contentPane.add(button2);
         button2.setBounds(40, 560, 120, 30);
 
-        //======== scrollPane1 ========
-        {
-            scrollPane1.setViewportView(viewRs);
-        }
-        contentPane.add(scrollPane1);
-        scrollPane1.setBounds(385, 35, 290, 525);
-
         //---- label5 ----
-        label5.setText(" Thanh pho 1");
+        label5.setText("Thanh pho xuat phat");
         contentPane.add(label5);
-        label5.setBounds(1020, 105, 220, 40);
+        label5.setBounds(425, 100, 220, 40);
 
         //---- cityStart ----
         cityStart.addActionListener(e -> selectItem(e));
         contentPane.add(cityStart);
-        cityStart.setBounds(1020, 160, 280, 40);
+        cityStart.setBounds(425, 155, 280, 40);
 
         //---- startAstar ----
         startAstar.setText("OK");
         startAstar.addActionListener(e -> showDialog(e));
         contentPane.add(startAstar);
-        startAstar.setBounds(1020, 250, 120, startAstar.getPreferredSize().height);
+        startAstar.setBounds(425, 245, 120, startAstar.getPreferredSize().height);
 
         //---- label7 ----
-        label7.setText("Khang cach chim bay v\u1edbi tp A");
+        label7.setText("Khoang cach chim bay v\u1edbi Bucharest");
         contentPane.add(label7);
-        label7.setBounds(40, 89, 220, 40);
+        label7.setBounds(40, 89, 250, 40);
         contentPane.add(hsScore);
         hsScore.setBounds(40, 129, 250, 45);
-        contentPane.add(viewRs2);
-        viewRs2.setBounds(685, 35, 288, 523);
 
         //---- button5 ----
         button5.setText("show graph");
@@ -258,7 +224,7 @@ public class testa extends JFrame {
 
         { // compute preferred size
             Dimension preferredSize = new Dimension();
-            for (int i = 0; i < contentPane.getComponentCount(); i++) {
+            for(int i = 0; i < contentPane.getComponentCount(); i++) {
                 Rectangle bounds = contentPane.getComponent(i).getBounds();
                 preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                 preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -287,7 +253,7 @@ public class testa extends JFrame {
 
             { // compute preferred size
                 Dimension preferredSize = new Dimension();
-                for (int i = 0; i < dialog1ContentPane.getComponentCount(); i++) {
+                for(int i = 0; i < dialog1ContentPane.getComponentCount(); i++) {
                     Rectangle bounds = dialog1ContentPane.getComponent(i).getBounds();
                     preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                     preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -317,7 +283,7 @@ public class testa extends JFrame {
 
             { // compute preferred size
                 Dimension preferredSize = new Dimension();
-                for (int i = 0; i < dialog2ContentPane.getComponentCount(); i++) {
+                for(int i = 0; i < dialog2ContentPane.getComponentCount(); i++) {
                     Rectangle bounds = dialog2ContentPane.getComponent(i).getBounds();
                     preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                     preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -331,109 +297,11 @@ public class testa extends JFrame {
             dialog2.pack();
             dialog2.setLocationRelativeTo(dialog2.getOwner());
         }
-
-        //======== this2 ========
-        {
-            this2.setTitle("A START DEMO");
-            Container this2ContentPane = this2.getContentPane();
-            this2ContentPane.setLayout(null);
-
-            //---- label6 ----
-            label6.setText("Thanh Pho");
-            this2ContentPane.add(label6);
-            label6.setBounds(40, 4, 220, 40);
-            this2ContentPane.add(cityTf2);
-            cityTf2.setBounds(40, 44, 250, 45);
-
-            //---- button3 ----
-            button3.setText("OK");
-            button3.addActionListener(e -> addCityAction(e));
-            this2ContentPane.add(button3);
-            button3.setBounds(40, 180, 120, 30);
-
-            //---- label8 ----
-            label8.setText(" Thanh pho 1");
-            this2ContentPane.add(label8);
-            label8.setBounds(35, 223, 220, 40);
-
-            //---- comboBox3 ----
-            comboBox3.addActionListener(e -> selectItem(e));
-            this2ContentPane.add(comboBox3);
-            comboBox3.setBounds(35, 280, 280, 40);
-
-            //---- label9 ----
-            label9.setText(" Thanh pho 2");
-            this2ContentPane.add(label9);
-            label9.setBounds(35, 340, 220, 40);
-            this2ContentPane.add(comboBox4);
-            comboBox4.setBounds(35, 395, 280, 40);
-
-            //---- label10 ----
-            label10.setText("Khoang cach ");
-            this2ContentPane.add(label10);
-            label10.setBounds(35, 445, 220, 40);
-            this2ContentPane.add(distanceTf2);
-            distanceTf2.setBounds(35, 490, 250, 45);
-
-            //---- button4 ----
-            button4.setText("OK");
-            button4.addActionListener(e -> addDistanceAction(e));
-            this2ContentPane.add(button4);
-            button4.setBounds(40, 560, 120, 30);
-
-            //======== scrollPane4 ========
-            {
-                scrollPane4.setViewportView(viewRs3);
-            }
-            this2ContentPane.add(scrollPane4);
-            scrollPane4.setBounds(385, 35, 290, 525);
-
-            //---- label11 ----
-            label11.setText(" Thanh pho 1");
-            this2ContentPane.add(label11);
-            label11.setBounds(1020, 105, 220, 40);
-
-            //---- cityStart2 ----
-            cityStart2.addActionListener(e -> selectItem(e));
-            this2ContentPane.add(cityStart2);
-            cityStart2.setBounds(1020, 160, 280, 40);
-
-            //---- startAstar2 ----
-            startAstar2.setText("OK");
-            startAstar2.addActionListener(e -> showDialog(e));
-            this2ContentPane.add(startAstar2);
-            startAstar2.setBounds(1020, 250, 120, startAstar2.getPreferredSize().height);
-
-            //---- label12 ----
-            label12.setText("Khang cach chim bay v\u1edbi tp A");
-            this2ContentPane.add(label12);
-            label12.setBounds(40, 89, 220, 40);
-            this2ContentPane.add(hsScore2);
-            hsScore2.setBounds(40, 129, 250, 45);
-            this2ContentPane.add(viewRs4);
-            viewRs4.setBounds(685, 35, 288, 523);
-
-            { // compute preferred size
-                Dimension preferredSize = new Dimension();
-                for (int i = 0; i < this2ContentPane.getComponentCount(); i++) {
-                    Rectangle bounds = this2ContentPane.getComponent(i).getBounds();
-                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-                }
-                Insets insets = this2ContentPane.getInsets();
-                preferredSize.width += insets.right;
-                preferredSize.height += insets.bottom;
-                this2ContentPane.setMinimumSize(preferredSize);
-                this2ContentPane.setPreferredSize(preferredSize);
-            }
-            this2.pack();
-            this2.setLocationRelativeTo(this2.getOwner());
-        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - ngoc ha
+    // Generated using JFormDesigner Evaluation license - ahcogn
     private JLabel label1;
     private JTextField cityTf;
     private JButton button1;
@@ -444,14 +312,11 @@ public class testa extends JFrame {
     private JLabel label4;
     private JTextField distanceTf;
     private JButton button2;
-    private JScrollPane scrollPane1;
-    private JTextArea viewRs;
     private JLabel label5;
     private JComboBox cityStart;
     private JButton startAstar;
     private JLabel label7;
     private JTextField hsScore;
-    private JTextArea viewRs2;
     private JButton button5;
     private JDialog dialog1;
     private JScrollPane scrollPane2;
@@ -459,29 +324,9 @@ public class testa extends JFrame {
     private JDialog dialog2;
     private JScrollPane scrollPane3;
     private JTextArea information;
-    private JFrame this2;
-    private JLabel label6;
-    private JTextField cityTf2;
-    private JButton button3;
-    private JLabel label8;
-    private JComboBox comboBox3;
-    private JLabel label9;
-    private JComboBox comboBox4;
-    private JLabel label10;
-    private JTextField distanceTf2;
-    private JButton button4;
-    private JScrollPane scrollPane4;
-    private JTextArea viewRs3;
-    private JLabel label11;
-    private JComboBox cityStart2;
-    private JButton startAstar2;
-    private JLabel label12;
-    private JTextField hsScore2;
-    private JTextArea viewRs4;
-
     // JFormDesigner - End of variables declaration  //GEN-END:variables
     public static void main(String[] args) {
-        JFrame frame = new testa();
+        JFrame frame = new App();
         frame.setVisible(true);
     }
 }
